@@ -1,0 +1,134 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/TestRelations/TestRelations.csproj": {}
+  },
+  "projects": {
+    "/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/Relations.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/Relations.csproj",
+        "projectName": "Relations",
+        "projectPath": "/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/Relations.csproj",
+        "packagesPath": "/home/a1nsworth/.nuget/packages/",
+        "outputPath": "/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/a1nsworth/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.300/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/TestRelations/TestRelations.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/TestRelations/TestRelations.csproj",
+        "projectName": "TestRelations",
+        "projectPath": "/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/TestRelations/TestRelations.csproj",
+        "packagesPath": "/home/a1nsworth/.nuget/packages/",
+        "outputPath": "/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/TestRelations/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/a1nsworth/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/Relations.csproj": {
+                "projectPath": "/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/Relations.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "MSTest.TestAdapter": {
+              "target": "Package",
+              "version": "[2.2.8, )"
+            },
+            "MSTest.TestFramework": {
+              "target": "Package",
+              "version": "[2.2.8, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.1.0, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.300/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

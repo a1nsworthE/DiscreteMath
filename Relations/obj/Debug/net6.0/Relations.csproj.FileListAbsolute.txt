@@ -1,0 +1,15 @@
+/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/bin/Debug/net6.0/Relations
+/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/bin/Debug/net6.0/Relations.deps.json
+/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/bin/Debug/net6.0/Relations.runtimeconfig.json
+/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/bin/Debug/net6.0/Relations.dll
+/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/bin/Debug/net6.0/Relations.pdb
+/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/obj/Debug/net6.0/Relations.csproj.AssemblyReference.cache
+/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/obj/Debug/net6.0/Relations.GeneratedMSBuildEditorConfig.editorconfig
+/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/obj/Debug/net6.0/Relations.AssemblyInfoInputs.cache
+/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/obj/Debug/net6.0/Relations.AssemblyInfo.cs
+/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/obj/Debug/net6.0/Relations.csproj.CoreCompileInputs.cache
+/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/obj/Debug/net6.0/Relations.dll
+/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/obj/Debug/net6.0/refint/Relations.dll
+/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/obj/Debug/net6.0/Relations.pdb
+/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/obj/Debug/net6.0/Relations.genruntimeconfig.cache
+/home/a1nsworth/Документы/DotnetProgramming/DiscreteMath/Relations/obj/Debug/net6.0/ref/Relations.dll
