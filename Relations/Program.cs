@@ -62,6 +62,7 @@ namespace DiscreteMath
                 maxElement = Math.Max(maxElement, Math.Max(pair.Item1, pair.Item2));
             }
 
+
             _relations = new bool[maxElement, maxElement];
             foreach (var pair in collection)
             {
