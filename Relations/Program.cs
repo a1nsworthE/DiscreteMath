@@ -21,6 +21,8 @@ namespace DiscreteMath
         /// </summary>
         private int _power = 0;
 
+        private bool Empty => _power == 0;
+
         public Relations()
         {
             _power = 0;
@@ -337,7 +339,7 @@ namespace DiscreteMath
         /// <returns>Возвращает true если r1 равняется r2, иначе false.</returns>
         public static bool operator ==(in Relations r1, in Relations r2)
         {
-            return r1.Length == r2.Length && r1 >= r2;
+            return (r1.Empty && r2.Empty)  || (r1.Length == r2.Length && r1 >= r2);
         }
 
         /// <summary>

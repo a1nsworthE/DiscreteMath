@@ -123,7 +123,7 @@ public class TestRelations
 
 
         // Asserts
-        Assert.AreNotEqual(result, expected);
+        Assert.AreEqual(result, expected);
         Assert.AreEqual(result.Power, expected.Power);
         Assert.AreNotEqual(result.CounterCells, expected.CounterCells);
     }
@@ -138,7 +138,7 @@ public class TestRelations
             (3, 1)
         );
 
-        // Actbool[0,0
+        // Act
         Relations result = new Relations(expected);
 
         // Asserts
@@ -298,5 +298,70 @@ public class TestRelations
 
         // Assert
         Assert.IsTrue(result >= expected);
+    }
+
+    [TestMethod]
+    public void Equals_TwoAreEmptyWithNotEqualLength_ShouldReturnTrue()
+    {
+        // Arrange
+        Relations expected = new Relations(10);
+
+        // Act
+        Relations result = new Relations(9);
+
+        // Assert
+        Assert.IsTrue(result == expected);
+    }
+
+    [TestMethod]
+    public void Equals_TwoAreEmptyWithEqualLength_ShouldReturnTrue()
+    {
+        // Arrange
+        Relations expected = new Relations(10);
+
+        // Act
+        Relations result = new Relations(10);
+
+        // Assert
+        Assert.IsTrue(result == expected);
+    }
+
+    [TestMethod]
+    public void Equals_TwoAreEmpty_ShouldReturnTrue()
+    {
+        // Arrange
+        Relations expected = new Relations();
+
+        // Act
+        Relations result = new Relations();
+
+        // Assert
+        Assert.IsTrue(result == expected);
+    }
+
+    [TestMethod]
+    public void Equals_NotEmptyOnlyOneNotEqualAtBegin_ShouldReturnFalse()
+    {
+        // Arrange
+        Relations expected = new Relations((1,2),(1,3),(1,3),(13,3));
+
+        // Act
+        Relations result = new Relations((1,6),(1,3),(1,3),(13,3));
+
+        // Assert
+        Assert.IsFalse(result == expected);
+    }
+
+    [TestMethod]
+    public void Equals_NotEmptyOnlyOneNotEqualAtEnd_ShouldReturnFalse()
+    {
+        // Arrange
+        Relations expected = new Relations((1,2),(1,3),(1,3),(13,3));
+
+        // Act
+        Relations result = new Relations((1,2),(1,3),(1,3),(11,3));
+
+        // Assert
+        Assert.IsFalse(result == expected);
     }
 }
