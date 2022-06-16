@@ -589,4 +589,149 @@ public class TestRelations
         Assert.AreEqual(result.CounterCells, expected.CounterCells);
         Assert.AreEqual(result.Power, expected.Power);
     }
+
+    [TestMethod]
+    public void Intersection_TwoEmpty_ShouldReturnEmpty()
+    {
+        // Arrange
+        Relations b = new Relations();
+        Relations a = new Relations();
+        Relations expected = new Relations();
+
+        // Act
+        var result = a * b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Intersection_TwoEmpty_ShouldReturnEmptyWithMinLength()
+    {
+        // Arrange
+        Relations b = new Relations(10);
+        Relations a = new Relations(3);
+        Relations expected = new Relations(3);
+
+        // Act
+        var result = a * b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Intersection_OneIsEmpty_ShouldReturnEmpty_1()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2));
+        Relations b = new Relations(10);
+        Relations expected = new Relations(10);
+
+        // Act
+        var result = a * b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Intersection_OneIsEmpty_ShouldReturnEmpty_2()
+    {
+        // Arrange
+        Relations a = new Relations((10));
+        Relations b = new Relations((1, 2));
+        Relations expected = new Relations(10);
+
+        // Act
+        var result = a * b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Intersection_AreTwoEqual_ShouldReturnOneOfRelations()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 5));
+        Relations b = new Relations((1, 2), (1, 3), (1, 4), (1, 5));
+        Relations expected = new Relations((1,2),(1,3),(1,4),(1,5));
+
+        // Act
+        var result = a * b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Intersection_EqualsOnlyAtBegin_ShouldReturnRelationsOfOnePair()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 5));
+        Relations b = new Relations((1, 2), (2, 3), (6, 4), (8, 5));
+        Relations expected = new Relations((1,2));
+
+        // Act
+        var result = a * b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    
+    [TestMethod]
+    public void Intersection_EqualsOnlyAtEnd_ShouldReturnRelationsOfOnePair()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 5));
+        Relations b = new Relations((7, 2), (2, 3), (6, 4), (1, 5));
+        Relations expected = new Relations((1,5));
+
+        // Act
+        var result = a * b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Intersection_EqualsOnlyAtBeginAndEnd_ShouldReturnRelationsOfTwoPair()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 5));
+        Relations b = new Relations((1, 2), (2, 3), (6, 4), (1, 5));
+        Relations expected = new Relations((1,2),(1,5));
+
+        // Act
+        var result = a * b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
 }
