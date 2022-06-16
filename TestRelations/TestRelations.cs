@@ -188,7 +188,7 @@ public class TestRelations
         int expected = 4;
 
         // Act
-        Relations result = new Relations((1,2));
+        Relations result = new Relations((1, 2));
 
         // Asserts
         Assert.AreEqual(result.CounterCells, expected);
@@ -200,10 +200,10 @@ public class TestRelations
     public void SubSet_TwoEqualRelations_ShouldReturnTrue()
     {
         // Arrange
-        Relations expected = new Relations((1,2),(2,1),(9,10),(10,9));
+        Relations expected = new Relations((1, 2), (2, 1), (9, 10), (10, 9));
 
         // Act
-        Relations result = new Relations((1,2),(2,1),(9,10),(10,9));
+        Relations result = new Relations((1, 2), (2, 1), (9, 10), (10, 9));
 
         // Assert
         Assert.IsTrue(result >= expected);
@@ -226,7 +226,7 @@ public class TestRelations
     public void SubSet_SubSetIsEmpty_ShouldReturnTrue()
     {
         // Arrange
-        Relations expected = new Relations((1,2));
+        Relations expected = new Relations((1, 2));
 
         // Act
         Relations result = new Relations();
@@ -242,7 +242,7 @@ public class TestRelations
         Relations expected = new Relations();
 
         // Act
-        Relations result = new Relations((1,2),(1,3));
+        Relations result = new Relations((1, 2), (1, 3));
 
         // Assert
         Assert.IsFalse(result >= expected);
@@ -252,10 +252,10 @@ public class TestRelations
     public void SubSet_SubSetIsLargestLength_ShouldReturnFalse()
     {
         // Arrange
-        Relations expected = new Relations((1,2));
+        Relations expected = new Relations((1, 2));
 
         // Act
-        Relations result = new Relations((1,2),(1,3));
+        Relations result = new Relations((1, 2), (1, 3));
 
         // Assert
         Assert.IsFalse(result >= expected);
@@ -265,10 +265,10 @@ public class TestRelations
     public void SubSet_SubSetWithoutOneElement_ShouldReturnTrue()
     {
         // Arrange
-        Relations expected = new Relations((1,2),(1,3),(3,4));
+        Relations expected = new Relations((1, 2), (1, 3), (3, 4));
 
         // Act
-        Relations result = new Relations((1,2),(1,3));
+        Relations result = new Relations((1, 2), (1, 3));
 
         // Assert
         Assert.IsTrue(result >= expected);
@@ -278,10 +278,10 @@ public class TestRelations
     public void SubSet_SubSetOnlyOnePairInMainSet_ShouldReturnTrue()
     {
         // Arrange
-        Relations expected = new Relations((1,2),(1,3),(3,4),(11,9));
+        Relations expected = new Relations((1, 2), (1, 3), (3, 4), (11, 9));
 
         // Act
-        Relations result = new Relations((11,9));
+        Relations result = new Relations((11, 9));
 
         // Assert
         Assert.IsTrue(result >= expected);
@@ -291,10 +291,10 @@ public class TestRelations
     public void SubSet_SubSetOnlyMaxMinPairInMainSet_ShouldReturnTrue()
     {
         // Arrange
-        Relations expected = new Relations((1,2),(1,3),(3,4),(11,9));
+        Relations expected = new Relations((1, 2), (1, 3), (3, 4), (11, 9));
 
         // Act
-        Relations result = new Relations((11,9),(1,2));
+        Relations result = new Relations((11, 9), (1, 2));
 
         // Assert
         Assert.IsTrue(result >= expected);
@@ -343,10 +343,10 @@ public class TestRelations
     public void Equals_NotEmptyOnlyOneNotEqualAtBegin_ShouldReturnFalse()
     {
         // Arrange
-        Relations expected = new Relations((1,2),(1,3),(1,3),(13,3));
+        Relations expected = new Relations((1, 2), (1, 3), (1, 3), (13, 3));
 
         // Act
-        Relations result = new Relations((1,6),(1,3),(1,3),(13,3));
+        Relations result = new Relations((1, 6), (1, 3), (1, 3), (13, 3));
 
         // Assert
         Assert.IsFalse(result == expected);
@@ -356,12 +356,237 @@ public class TestRelations
     public void Equals_NotEmptyOnlyOneNotEqualAtEnd_ShouldReturnFalse()
     {
         // Arrange
-        Relations expected = new Relations((1,2),(1,3),(1,3),(13,3));
+        Relations expected = new Relations((1, 2), (1, 3), (1, 3), (13, 3));
 
         // Act
-        Relations result = new Relations((1,2),(1,3),(1,3),(11,3));
+        Relations result = new Relations((1, 2), (1, 3), (1, 3), (11, 3));
 
         // Assert
         Assert.IsFalse(result == expected);
+    }
+
+    [TestMethod]
+    public void Equals_NotEmptyOnlyOneNotEqualAtBeginAndEnd_ShouldReturnFalse()
+    {
+        // Arrange
+        Relations expected = new Relations((1, 2), (1, 3), (1, 3), (13, 3));
+
+        // Act
+        Relations result = new Relations((1, 2), (1, 3), (1, 3), (11, 3));
+
+        // Assert
+        Assert.IsFalse(result == expected);
+    }
+
+    [TestMethod]
+    public void Equals_NotEmptyOnlyOneNotEqualAtMiddle_ShouldReturnFalse()
+    {
+        // Arrange
+        Relations expected = new Relations((1, 2), (1, 3), (1, 3), (13, 3));
+
+        // Act
+        Relations result = new Relations((1, 2), (1, 3), (1, 4), (13, 3));
+
+        // Assert
+        Assert.IsFalse(result == expected);
+    }
+
+    [TestMethod]
+    public void Equals_LargeLengthAndOneNotEqualAtEnd_ShouldReturnFalse()
+    {
+        // Arrange
+        Relations expected = new Relations(
+        (1, 2),
+        (1, 3),
+        (1, 5),
+        (1, 6),
+        (2, 7),
+        (3, 2),
+        (4, 3),
+        (5, 5),
+        (6, 6),
+        (7, 7),
+        (10, 11)
+        );
+
+        // Act
+        Relations result = new Relations(
+        (1, 2),
+        (1, 3),
+        (1, 5),
+        (1, 6),
+        (2, 7),
+        (3, 2),
+        (4, 3),
+        (5, 5),
+        (6, 6),
+        (7, 7),
+        (10, 12)
+        );
+
+        // Assert
+        Assert.IsFalse(result == expected);
+    }
+
+    [TestMethod]
+    public void Union_TwoAreEmpty_ShouldReturnEmptySetWithMaxLength()
+    {
+        // Arrange
+        Relations a = new Relations(10);
+        Relations b = new Relations(5);
+        Relations expected = new Relations(10);
+
+        // Act
+        var result = a + b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Union_TwoAreEmpty_ShouldReturnEmpty()
+    {
+        // Arrange
+        Relations a = new Relations();
+        Relations b = new Relations();
+        Relations expected = new Relations();
+
+        // Act
+        var result = a + b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Union_RightIsEmpty_ShouldReturnNotEmpty()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2), (1, 3), (2, 2));
+        Relations b = new Relations();
+        Relations expected = new Relations((1, 2), (1, 3), (2, 2));
+
+        // Act
+        var result = a + b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Union_LeftIsEmpty_ShouldReturnNotEmpty()
+    {
+        // Arrange
+        Relations b = new Relations((1, 2), (1, 3), (2, 2));
+        Relations a = new Relations();
+        Relations expected = new Relations((1, 2), (1, 3), (2, 2));
+
+        // Act
+        var result = b + a;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Union_TwoAreEqual_ShouldReturnOneOfRelations()
+    {
+        // Arrange
+        Relations b = new Relations((1, 2), (1, 3), (2, 2));
+        Relations a = new Relations((1, 2), (1, 3), (2, 2));
+        Relations expected = new Relations((1, 2), (1, 3), (2, 2));
+
+        // Act
+        var result = b + a;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Union_OneNotEqualAtBegin_ShouldReturnUnionOfRelationsWithTwoNewPair()
+    {
+        // Arrange
+        Relations b = new Relations((1, 1), (1, 3), (2, 2));
+        Relations a = new Relations((1, 2), (1, 3), (2, 2));
+        Relations expected = new Relations((1, 1), (1, 2), (1, 3), (2, 2));
+
+        // Act
+        var result = b + a;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Union_OneNotEqualAtEnd_ShouldReturnUnionOfRelationsWithTwoNewPair()
+    {
+        // Arrange
+        Relations b = new Relations((1, 2), (1, 3), (2, 3));
+        Relations a = new Relations((1, 2), (1, 3), (2, 2));
+        Relations expected = new Relations((1, 2), (1, 3), (2, 2), (2, 3));
+
+        // Act
+        var result = b + a;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Union_OneNotEqualAtBeginAndEnd_ShouldReturnUnionOfRelationsWithFourNewPair()
+    {
+        // Arrange
+        Relations b = new Relations((1, 1), (1, 3), (1, 5), (1, 6), (2, 3));
+        Relations a = new Relations((1, 2), (1, 3), (1, 5), (1, 6), (2, 2));
+        Relations expected = new Relations((1, 1), (1, 2), (1, 3), (1, 5), (1, 6), (2, 2), (2, 3));
+
+        // Act
+        var result = b + a;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Union_TwoNotEqualRelations_ShouldReturnRelationsWithAllElementsOfTwo()
+    {
+        // Arrange
+        Relations b = new Relations((1, 1), (1, 3), (1, 5), (1, 6), (2, 3));
+        Relations a = new Relations((1, 2), (3, 3), (2, 5), (2, 6), (2, 2));
+        Relations expected = new Relations((1, 1), (1, 2), (1, 3), (1, 5), (1, 6), (2, 2), (2, 3), (3, 3), (2, 5), (2, 6));
+
+        // Act
+        var result = b + a;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
     }
 }
