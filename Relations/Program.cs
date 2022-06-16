@@ -464,7 +464,8 @@ namespace DiscreteMath
             {
                 for (int column = 0; column < result.Length; column++)
                 {
-                    if (((row <= r1.Length - 1) && (column <= r1.Length - 1)) && (((row <= r2.Length - 1) && (column <= r2.Length - 1))))
+                    if (((row <= r1.Length - 1) && (column <= r1.Length - 1)) &&
+                        (((row <= r2.Length - 1) && (column <= r2.Length - 1))))
                     {
                         if (r1[row, column] != r2[row, column])
                         {
@@ -495,7 +496,8 @@ namespace DiscreteMath
             {
                 for (int column = 0; column < result.Length; column++)
                 {
-                    if (((row <= r1.Length - 1) && (column <= r1.Length - 1)) && (((row <= r2.Length - 1) && (column <= r2.Length - 1))))
+                    if (((row <= r1.Length - 1) && (column <= r1.Length - 1)) &&
+                        (((row <= r2.Length - 1) && (column <= r2.Length - 1))))
                     {
                         result[row, column] = r1[row, column] ^ r2[row, column];
                     }

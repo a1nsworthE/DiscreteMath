@@ -752,4 +752,130 @@ public class TestRelations
         Assert.AreEqual(result.CounterCells, expected.CounterCells);
         Assert.AreEqual(result.Power, expected.Power);
     }
+
+    [TestMethod]
+    public void Difference_RightIsEmpty_ShouldReturnNotEmpty()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 15), (1, 12), (1, 31), (1, 41), (11, 5));
+        Relations b = new Relations();
+        Relations expected = new Relations((1, 2), (1, 3), (1, 4), (1, 15), (1, 12), (1, 31), (1, 41), (11, 5));
+
+        // Act
+        var result = a - b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Difference_TwoAreEqual_ShouldReturnEmpty()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 15), (1, 12), (1, 31), (1, 41), (11, 5));
+        Relations b = new Relations((1, 2), (1, 3), (1, 4), (1, 15), (1, 12), (1, 31), (1, 41), (11, 5));
+        Relations expected = new Relations(41);
+
+        // Act
+        var result = a - b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Difference_NotAreEqualAtBegin_ShouldReturnRelationsWithBeginPair()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 15), (1, 12), (1, 31), (1, 41), (11, 5));
+        Relations b = new Relations((1, 1), (1, 3), (1, 4), (1, 15), (1, 12), (1, 31), (1, 41), (11, 5));
+        Relations expected = new Relations(41, (1, 2));
+
+        // Act
+        var result = a - b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Difference_NotAreEqualAtEnd_ShouldReturnRelationsWithEndPair()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 15), (1, 12), (1, 31), (12, 41), (11, 5));
+        Relations b = new Relations((1, 2), (1, 3), (1, 4), (1, 15), (1, 12), (1, 31), (1, 41), (11, 5));
+        Relations expected = new Relations(41, (12, 41));
+
+        // Act
+        var result = a - b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Difference_NotAreEqualAtBeginAndEnd_ShouldReturnRelationsWithBeginAndEndPairs()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 15), (1, 12), (1, 31), (12, 41), (11, 5));
+        Relations b = new Relations((1, 1), (1, 3), (1, 4), (1, 15), (1, 12), (1, 31), (1, 41), (11, 5));
+        Relations expected = new Relations(41, (12, 41), (1, 2));
+
+        // Act
+        var result = a - b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Difference_AreEqualAtBegin_ShouldReturnRelationsWithoutBeginPair()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2), (13, 3), (13, 4), (13, 15), (13, 17), (13, 31), (12, 41));
+        Relations b = new Relations((1, 2), (11, 3), (11, 4), (11, 15), (11, 12), (11, 31), (11, 41));
+        Relations expected = new Relations(41, (13, 3), (13, 4), (13, 15), (13, 17), (13, 31), (12, 41));
+
+        // Act
+        var result = a - b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Difference_AreEqualAtEnd_ShouldReturnRelationsWithoutEndPair()
+    {
+        // Arrange
+        Relations a = new Relations((3, 2), (13, 3), (13, 4), (13, 15), (13, 17), (13, 31), (12, 41));
+        Relations b = new Relations((1, 2), (11, 3), (11, 4), (11, 15), (11, 12), (11, 31), (12, 41));
+        Relations expected = new Relations(41, (3, 2), (13, 3), (13, 4), (13, 15), (13, 17), (13, 31));
+
+        // Act
+        var result = a - b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
 }
