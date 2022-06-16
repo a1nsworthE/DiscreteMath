@@ -163,32 +163,7 @@ namespace DiscreteMath
         /// <value>Возвращает кол-во лежащих элементов в матрице.</value>
         public int Power => _power;
 
-        /// <summary>
-        /// 
-        /// </summary>
         public bool[,] Data => _relations;
-
-        /// <summary>
-        /// Удаление элемента.
-        /// </summary>
-        /// <param name="firstElement">Первый элемент отношения.</param>
-        /// <param name="secondElement">Второй элемент отношения.</param>
-        public void DeleteElmentByValues(int firstElement, int secondElement)
-        {
-            try
-            {
-                if ((secondElement > Length || firstElement > Length) || firstElement * secondElement == 0)
-                {
-                    throw new ArgumentOutOfRangeException("Bad Elements");
-                }
-
-                _relations[firstElement - 1, secondElement - 1] = false;
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                System.Console.WriteLine(ex);
-            }
-        }
 
         /// <summary>
         /// Удаления отношения (a,b) из матрицы
@@ -215,7 +190,7 @@ namespace DiscreteMath
         /// Удаления отношения (a,b) из матрицы
         /// </summary>
         /// <param name="p">Пара (a,b)</param>
-        public void DeleteEelmentByValues(in (int, int) p)
+        public void DeleteElementByValues(in (int, int) p)
         {
             try
             {
@@ -264,31 +239,17 @@ namespace DiscreteMath
             string[] tuple = Console.ReadLine().Split(' ');
             int maxElement = 0;
 
-            // Пары в одну строчку 1 2 3 9 10 6 .
-            if (tuple.Length > 2)
-            {
-                for (int i = 0; i + 1 < tuple.Length / 2; i++)
-                {
-                    list.Add(Tuple.Create<int, int>(Convert.ToInt32(tuple[i]), Convert.ToInt32(tuple[i + 1])));
-                    maxElement = Math.Max(maxElement, Math.Max(list[i].Item1, list[i].Item2));
-                }
-            }
             // Пары через enter.
-            else
+            for (int i = 0; i < totalPairs; i++)
             {
                 list.Add(Tuple.Create<int, int>(Convert.ToInt32(tuple[0]), Convert.ToInt32(tuple[1])));
-                maxElement = Math.Max(maxElement, Math.Max(list[0].Item1, list[0].Item2));
-                for (int i = 1; i < totalPairs; i++)
-                {
-                    tuple = Console.ReadLine().Split(' ');
+                maxElement = Math.Max(maxElement, Math.Max(list[i - 1].Item1, list[i - 1].Item2));
 
-                    list.Add(Tuple.Create<int, int>(Convert.ToInt32(tuple[0]), Convert.ToInt32(tuple[1])));
-                    maxElement = Math.Max(maxElement, Math.Max(list[i - 1].Item1, list[i - 1].Item2));
-                }
+                tuple = Console.ReadLine().Split(' ');
+
             }
-            var res = new Relations(list, maxElement);
 
-            return res;
+            return new Relations(list, maxElement);
         }
     }
 
@@ -350,7 +311,7 @@ namespace DiscreteMath
             {
                 for (int column = 0; column < r1.Length; column++)
                 {
-                    if (r1[row, column] != r2[row, column])
+                    if (r1[row,column] && r1[row, column] != r2[row, column])
                     {
                         return false;
                     }
