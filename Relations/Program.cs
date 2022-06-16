@@ -119,6 +119,19 @@ namespace DiscreteMath
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="maxElement"></param>
+        public Relations(int maxElement, params (int, int)[] collection) : this(maxElement)
+        {
+            foreach (var pair in collection)
+            {
+                this[pair.Item1 - 1, pair.Item2 - 1] = true;
+            }
+        }
+
+        /// <summary>
         /// Инициализирует отношение. 
         /// </summary>
         /// <param name="collection">Список для инициализации.</param>
@@ -313,7 +326,7 @@ namespace DiscreteMath
             {
                 for (int column = 0; column < r1.Length; column++)
                 {
-                    if (r1[row,column] && r1[row, column] != r2[row, column])
+                    if (r1[row, column] && r1[row, column] != r2[row, column])
                     {
                         return false;
                     }
@@ -339,7 +352,7 @@ namespace DiscreteMath
         /// <returns>Возвращает true если r1 равняется r2, иначе false.</returns>
         public static bool operator ==(in Relations r1, in Relations r2)
         {
-            return (r1.Empty && r2.Empty)  || (r1.Length == r2.Length && r1 >= r2);
+            return (r1.Empty && r2.Empty) || (r1.Length == r2.Length && r1 >= r2);
         }
 
         /// <summary>
@@ -408,8 +421,20 @@ namespace DiscreteMath
         /// <returns>Возвращает результат Пересечения r1 и r2.</returns>
         public static Relations operator *(in Relations r1, in Relations r2)
         {
-            Relations result = new Relations(Math.Min(r1.Length, r2.Length));
+            if (r1.Empty && r2.Empty)
+            {
+                return new Relations(Math.Min(r1.Length, r2.Length));
+            }
+            else if (r1.Empty)
+            {
+                return new Relations(r1.Length);
+            }
+            else if (r2.Empty)
+            {
+                return new Relations(r2.Length);
+            }
 
+            var result = new Relations(Math.Min(r1.Length, r2.Length));
             for (int row = 0; row < result.Length; row++)
             {
                 for (int column = 0; column < result.Length; column++)

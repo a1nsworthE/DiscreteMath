@@ -668,7 +668,7 @@ public class TestRelations
         // Arrange
         Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 5));
         Relations b = new Relations((1, 2), (1, 3), (1, 4), (1, 5));
-        Relations expected = new Relations((1,2),(1,3),(1,4),(1,5));
+        Relations expected = new Relations((1, 2), (1, 3), (1, 4), (1, 5));
 
         // Act
         var result = a * b;
@@ -686,7 +686,7 @@ public class TestRelations
         // Arrange
         Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 5));
         Relations b = new Relations((1, 2), (2, 3), (6, 4), (8, 5));
-        Relations expected = new Relations((1,2));
+        Relations expected = new Relations(5, (1, 2));
 
         // Act
         var result = a * b;
@@ -698,14 +698,14 @@ public class TestRelations
         Assert.AreEqual(result.Power, expected.Power);
     }
 
-    
+
     [TestMethod]
-    public void Intersection_EqualsOnlyAtEnd_ShouldReturnRelationsOfOnePair()
+    public void Intersection_NotEmptyAndNoEquals_ShouldReturnRelationsOfOnePair()
     {
         // Arrange
         Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 5));
-        Relations b = new Relations((7, 2), (2, 3), (6, 4), (1, 5));
-        Relations expected = new Relations((1,5));
+        Relations b = new Relations((7, 2), (2, 3), (6, 4), (7, 5));
+        Relations expected = new Relations(5);
 
         // Act
         var result = a * b;
@@ -723,7 +723,25 @@ public class TestRelations
         // Arrange
         Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 5));
         Relations b = new Relations((1, 2), (2, 3), (6, 4), (1, 5));
-        Relations expected = new Relations((1,2),(1,5));
+        Relations expected = new Relations((1, 2), (1, 5));
+
+        // Act
+        var result = a * b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Intersection_EqualsOnlyAtBeginAndMiddleAndEnd_ShouldReturnRelationsOf3Pair()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 15), (1, 12), (1, 31), (1, 41), (11, 5));
+        Relations b = new Relations((1, 2), (12, 3), (21, 4), (1, 15), (1, 12), (21, 31), (12, 41), (11, 5));
+        Relations expected = new Relations(41, (1, 2), (1, 15), (1, 12), (11, 5));
 
         // Act
         var result = a * b;
