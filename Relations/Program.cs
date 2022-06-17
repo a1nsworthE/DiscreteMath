@@ -21,7 +21,7 @@ namespace DiscreteMath
         /// </summary>
         private int _power = 0;
 
-        private bool Empty => _power == 0;
+        private bool Empty() => _power == 0;
 
         public Relations()
         {
@@ -247,7 +247,6 @@ namespace DiscreteMath
         /// </summary>
         /// <param name="totalPairs">Кол-во элементов в отношениях.</param>
         /// <returns>Возвращает отношения.</returns>
-        // TODO допилить когда всё вводится в одну строчку
         public static Relations Input(int totalPairs)
         {
             var list = new List<Tuple<int, int>>();
@@ -261,7 +260,6 @@ namespace DiscreteMath
                 maxElement = Math.Max(maxElement, Math.Max(list[i - 1].Item1, list[i - 1].Item2));
 
                 tuple = Console.ReadLine().Split(' ');
-
             }
 
             return new Relations(list, maxElement);
@@ -352,7 +350,7 @@ namespace DiscreteMath
         /// <returns>Возвращает true если r1 равняется r2, иначе false.</returns>
         public static bool operator ==(in Relations r1, in Relations r2)
         {
-            return (r1.Empty && r2.Empty) || (r1.Length == r2.Length && r1 >= r2);
+            return (r1.Empty() && r2.Empty()) || (r1.Length == r2.Length && r1 >= r2);
         }
 
         /// <summary>
@@ -421,15 +419,15 @@ namespace DiscreteMath
         /// <returns>Возвращает результат Пересечения r1 и r2.</returns>
         public static Relations operator *(in Relations r1, in Relations r2)
         {
-            if (r1.Empty && r2.Empty)
+            if (r1.Empty() && r2.Empty())
             {
                 return new Relations(Math.Min(r1.Length, r2.Length));
             }
-            else if (r1.Empty)
+            else if (r1.Empty())
             {
                 return new Relations(r1.Length);
             }
-            else if (r2.Empty)
+            else if (r2.Empty())
             {
                 return new Relations(r2.Length);
             }
@@ -439,7 +437,8 @@ namespace DiscreteMath
             {
                 for (int column = 0; column < result.Length; column++)
                 {
-                    if (((row <= r1.Length - 1) && (column <= r1.Length - 1)) && (((row <= r2.Length - 1) && (column <= r2.Length - 1))))
+                    if (((row <= r1.Length - 1) && (column <= r1.Length - 1)) &&
+                         (((row <= r2.Length - 1) && (column <= r2.Length - 1))))
                     {
                         result[row, column] = r1[row, column] && r2[row, column];
                     }
@@ -455,7 +454,6 @@ namespace DiscreteMath
         /// <param name="r1">Отношения первое.</param>
         /// <param name="r2">Отношение второе.</param>
         /// <returns>Возвращает результат Разности r1 и r2.</returns>
-        // TODO fix
         public static Relations operator -(in Relations r1, in Relations r2)
         {
             Relations result = new Relations(r1.Length);
@@ -522,13 +520,13 @@ namespace DiscreteMath
         /// <returns>Возвращает обращенное отношение.</returns>
         public static Relations Conversion(in Relations r)
         {
-            var list = new List<Tuple<int, int>>();
+            var list = new List<(int, int)>();
             int maxElement = 0;
-            for (int i = 0; i < r.Length; i++)
+            for (int i = 1; i <= r.Length; i++)
             {
-                if (r[i, i])
+                if (r[i - 1, i - 1])
                 {
-                    list.Add(Tuple.Create<int, int>(i, i));
+                    list.Add((i, i));
                     maxElement = i;
                 }
             }
@@ -545,19 +543,32 @@ namespace DiscreteMath
         // TODO исправить
         public static Relations Composition(in Relations r1, in Relations r2)
         {
-            var list = new List<Tuple<int, int>>();
+            if (r1.Empty() && r2.Empty())
+            {
+                return new Relations(Math.Min(r1.Length, r2.Length));
+            }
+            else if (r1.Empty())
+            {
+                return new Relations(r1.Length);
+            }
+            else if (r2.Empty())
+            {
+                return new Relations(r2.Length);
+            }
+
+            var list = new List<(int, int)>();
             var minLength = Math.Min(r1.Length, r2.Length);
             int maxElement = 0;
-            for (int z = 0; z < minLength; z++)
+            for (int row = 1; row <= minLength; row++)
             {
-                for (int row = 0; row < minLength; row++)
+                for (int column = 1; column <= minLength; column++)
                 {
-                    for (int column = 0; column < minLength; column++)
+                    for (int z = 0; z < minLength; z++)
                     {
-                        if (r1[row, z] && r2[z, column])
+                        if (r1[row - 1, z] && r2[z, column - 1])
                         {
                             maxElement = Math.Max(maxElement, Math.Max(row, column));
-                            list.Add(Tuple.Create<int, int>(row, column));
+                            list.Add((row, column));
                         }
                     }
                 }
@@ -613,7 +624,10 @@ namespace DiscreteMath
 
         static void Main(string[] args)
         {
+            Relations a = new Relations((1, 3), (2, 3), (1, 4));
+            Relations b = new Relations((3, 1), (4, 1));
 
+            Relations.Output(Relations.Composition(a, b));
         }
     }
 

@@ -878,4 +878,222 @@ public class TestRelations
         Assert.AreEqual(result.CounterCells, expected.CounterCells);
         Assert.AreEqual(result.Power, expected.Power);
     }
+
+    [TestMethod]
+    public void SymmetricDifference_TwoAreEmpty_ShouldReturnEmpty()
+    {
+        // Arrange
+        Relations a = new Relations();
+        Relations b = new Relations();
+        Relations expected = new Relations();
+
+        // Act
+        var result = a ^ b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void SymmetricDifference_TwoAreEmpty_ShouldReturnEmptyWithMaxLength()
+    {
+        // Arrange
+        Relations a = new Relations(10);
+        Relations b = new Relations(5);
+        Relations expected = new Relations(10);
+
+        // Act
+        var result = a ^ b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void SymmetricDifference_TwoAreEqualWithOneEqualPair_ShouldReturnEmpty()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2));
+        Relations b = new Relations((1, 2));
+        Relations expected = new Relations(2);
+
+        // Act
+        var result = a ^ b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void SymmetricDifference_TwoAreNotEqualWithOneNotEqualPair_ShouldReturnRelationsWithTwoPairs()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2));
+        Relations b = new Relations((1, 3));
+        Relations expected = new Relations((1, 2), (1, 3));
+
+        // Act
+        var result = a ^ b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void SymmetricDifference_NotEqualPairAtBegin_ShouldReturnRelationsWithTwoPairs()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9));
+        Relations b = new Relations((1, 1), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9));
+        Relations expected = new Relations(9, (1, 1), (1, 2));
+
+        // Act
+        var result = a ^ b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void SymmetricDifference_NotEqualPairAtEnd_ShouldReturnRelationsWithTwoPairs()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9));
+        Relations b = new Relations((1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (2, 9));
+        Relations expected = new Relations(9, (1, 9), (2, 9));
+
+        // Act
+        var result = a ^ b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void SymmetricDifference_EqualPairAtBegin_ShouldReturnRelationsWithoutTwoPairs()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9));
+        Relations b = new Relations((1, 2), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (2, 8), (2, 9));
+        Relations expected = new Relations((1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9),
+                                            (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (2, 8), (2, 9));
+
+        // Act
+        var result = a ^ b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void SymmetricDifference_EqualPairAtEnd_ShouldReturnRelationsWithoutTwoPairs()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9));
+        Relations b = new Relations((2, 2), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (2, 8), (1, 9));
+        Relations expected = new Relations(9, (1, 2), (2, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8),
+                                            (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (2, 8));
+
+        // Act
+        var result = a ^ b;
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Composition_TwoAreEmpty_ShouldReturnEmpty()
+    {
+        // Arrange
+        Relations a = new Relations();
+        Relations b = new Relations();
+        Relations expected = new Relations();
+
+        // Act
+        var result = Relations.Composition(a, b);
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Composition_TwoAreEmpty_ShouldReturnEmptyWithMinLength()
+    {
+        // Arrange
+        Relations a = new Relations(10);
+        Relations b = new Relations(5);
+        Relations expected = new Relations(5);
+
+        // Act
+        var result = Relations.Composition(a, b);
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Composition_AreEqualWithLengthOne_ShouldReturnRelationWithOnePair()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2));
+        Relations b = new Relations((1, 2));
+        Relations expected = new Relations((1, 1));
+
+        // Act
+        var result = Relations.Composition(a, b);
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Composition_AreEqualWithLengthTwo_ShouldReturnRelationWithTwoPair()
+    {
+        // Arrange
+        Relations a = new Relations((1, 2), (10, 9));
+        Relations b = new Relations((1, 2), (10, 9));
+        Relations expected = new Relations((1, 1),(10,10));
+
+        // Act
+        var result = Relations.Composition(a, b);
+
+        // Assert
+        Assert.AreEqual(result, expected);
+        Assert.AreEqual(result.Length, expected.Length);
+        Assert.AreEqual(result.CounterCells, expected.CounterCells);
+        Assert.AreEqual(result.Power, expected.Power);
+    }
 }
