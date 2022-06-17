@@ -533,7 +533,6 @@ namespace DiscreteMath
 
             if (maxElement == 0)
             {
-
                 return new Relations(r.Length);
             }
 
@@ -548,7 +547,7 @@ namespace DiscreteMath
         /// <returns></returns>
         public static Relations Composition(in Relations r1, in Relations r2)
         {
-            if (r1.Empty() && r2.Empty() || r1 == r2)
+            if (r1.Empty() && r2.Empty())
             {
                 return new Relations(Math.Min(r1.Length, r2.Length));
             }
@@ -579,6 +578,11 @@ namespace DiscreteMath
                 }
             }
 
+            if (maxElement == 0)
+            {
+                return new Relations(Math.Min(r1.Length, r2.Length));
+            }
+
             return new Relations(list, maxElement);
         }
 
@@ -588,7 +592,7 @@ namespace DiscreteMath
         /// <param name="r">Отношение.</param>
         /// <param name="degree">Степень в которую требуется возвести.</param>
         /// <returns>Возвращает отношение r возведенное в степень degree.</returns>
-        public static dynamic Degree(in Relations r, int degree)
+        public static dynamic Exponentiation(in Relations r, int degree)
         {
             if (degree == 0)
             {
@@ -597,7 +601,7 @@ namespace DiscreteMath
             else
             {
                 var result = r;
-                for (int i = 1; i < degree; i++)
+                for (int i = 1; i <= degree; i++)
                 {
                     result = Relations.Composition(r, result);
                 }

@@ -1098,24 +1098,6 @@ public class TestRelations
     }
 
     [TestMethod]
-    public void Composition_AreEqualWithLargeLength_ShouldReturnEmpty()
-    {
-        // Arrange
-        Relations a = new Relations((1, 2), (10, 9), (1, 3), (1, 4), (1, 5), (1, 7), (1, 10));
-        Relations b = new Relations((1, 2), (10, 9), (1, 3), (1, 4), (1, 5), (1, 7), (1, 10));
-        Relations expected = new Relations(10);
-
-        // Act
-        var result = Relations.Composition(a, b);
-
-        // Assert
-        Assert.AreEqual(result, expected);
-        Assert.AreEqual(result.Length, expected.Length);
-        Assert.AreEqual(result.CounterCells, expected.CounterCells);
-        Assert.AreEqual(result.Power, expected.Power);
-    }
-
-    [TestMethod]
     public void Composition_OneReversePair_1()
     {
         // Arrange
@@ -1287,5 +1269,47 @@ public class TestRelations
         Assert.AreEqual(result.Length, expected.Length);
         Assert.AreEqual(result.CounterCells, expected.CounterCells);
         Assert.AreEqual(result.Power, expected.Power);
+    }
+
+    [TestMethod]
+    public void Degree_DegreeEqualOne_ShouldReturnOne()
+    {
+        // Arrange
+        Relations a = new Relations((1,2));
+        int expected = 1;
+
+        // Act
+        var result = Relations.Exponentiation(a,0);
+
+        // Assert
+        Assert.AreEqual(result, expected);
+    }
+
+    [TestMethod]
+    public void Degree_DegreeEqualTwo_ShouldReturnEmpty()
+    {
+        // Arrange
+        Relations a = new Relations((1,2),(3,4));
+        var expected = new Relations(4);
+
+        // Act
+        var result = Relations.Exponentiation(a,2);
+
+        // Assert
+        Assert.AreEqual(result, expected);
+    }
+
+    [TestMethod]
+    public void Degree_DegreeEqualTwo_ShouldReturnOnePair()
+    {
+        // Arrange
+        Relations a = new Relations((1,2),(2,1));
+        var expected = new Relations((1,2),(2,1));
+
+        // Act
+        var result = Relations.Exponentiation(a,2);
+
+        // Assert
+        Assert.AreEqual(result, expected);
     }
 }
