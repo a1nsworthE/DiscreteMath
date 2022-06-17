@@ -531,6 +531,12 @@ namespace DiscreteMath
                 }
             }
 
+            if (maxElement == 0)
+            {
+
+                return new Relations(r.Length);
+            }
+
             return new Relations(list, maxElement); ;
         }
 
@@ -540,10 +546,9 @@ namespace DiscreteMath
         /// </summary>
         /// <param name="r"></param>
         /// <returns></returns>
-        // TODO исправить
         public static Relations Composition(in Relations r1, in Relations r2)
         {
-            if (r1.Empty() && r2.Empty())
+            if (r1.Empty() && r2.Empty() || r1 == r2)
             {
                 return new Relations(Math.Min(r1.Length, r2.Length));
             }
