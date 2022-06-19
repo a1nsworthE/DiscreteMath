@@ -4,161 +4,15 @@ using System.Collections.Generic;
 
 namespace DiscreteMath
 {
-    /// <summary>
-    /// Класс Отношения для Натуральных чисел.
-    /// Реализованный в виде, квадратной матрицы.
-    /// Заполненной true либо false.
-    /// </summary>
+    // Класс Отношений, который может хранить натуральные числа.
+    // Реализация в виде квадратной матрице заполненной true либо false.
     public partial class Relations
     {
-        /// <summary>
-        /// Матрица.
-        /// </summary>
+        // Матрица.
         private bool[,] _relations;
 
-        /// <summary>
-        /// Мощность матрицы, определяется по количеству входящих отношений.
-        /// </summary>
+        // Мощность матрицы, определяется по количеству входящих отношений.
         private int _power = 0;
-
-        private bool Empty() => _power == 0;
-
-        public Relations()
-        {
-            _power = 0;
-            _relations = new bool[0, 0];
-        }
-
-        /// <summary>
-        /// Выделение памяти под квадратную матрицу.
-        /// </summary>
-        /// <param name="size">Размерность квадратной матрицы.</param>
-        public Relations(int size)
-        {
-            _relations = new bool[size, size];
-        }
-
-        /// <summary>
-        /// Инициализирует отношение. 
-        /// </summary>
-        /// <param name="collection">Список для инициализации.</param>
-        public Relations(IEnumerable<(int, int)> collection)
-        {
-            int max = 0;
-            foreach (var item in collection)
-            {
-                max = Math.Max(max, Math.Max(item.Item1, item.Item2));
-            }
-
-            _relations = new bool[max, max];
-            foreach (var item in collection)
-            {
-                this[item.Item1 - 1, item.Item2 - 1] = true;
-            }
-        }
-
-        /// <summary>
-        /// Инициализирует отношение. 
-        /// </summary>
-        /// <param name="collection">Список для инициализации.</param>
-        public Relations(IEnumerable<Tuple<int, int>> collection)
-        {
-            int max = 0;
-            foreach (var item in collection)
-            {
-                max = Math.Max(max, Math.Max(item.Item1, item.Item2));
-            }
-
-            _relations = new bool[max, max];
-            foreach (var item in collection)
-            {
-                this[item.Item1 - 1, item.Item2 - 1] = true;
-            }
-        }
-
-        /// <summary>
-        /// Выделение памяти и инициализирование матрицы из другой матрицы.
-        /// </summary>
-        /// <param name="array">Матрица, для инициализации.</param>
-        public Relations(bool[,] array)
-        {
-            _relations = array;
-            foreach (var element in _relations)
-            {
-                if (element)
-                {
-                    _power++;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="collection"></param>
-        /// <param name="maxElement"></param>
-        public Relations(in IEnumerable<Tuple<int, int>> collection, int maxElement) : this(maxElement)
-        {
-            foreach (var pair in collection)
-            {
-                this[pair.Item1 - 1, pair.Item2 - 1] = true;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="collection"></param>
-        /// <param name="maxElement"></param>
-        public Relations(in IEnumerable<(int, int)> collection, int maxElement) : this(maxElement)
-        {
-            foreach (var pair in collection)
-            {
-                this[pair.Item1 - 1, pair.Item2 - 1] = true;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="collection"></param>
-        /// <param name="maxElement"></param>
-        public Relations(int maxElement, params (int, int)[] collection) : this(maxElement)
-        {
-            foreach (var pair in collection)
-            {
-                this[pair.Item1 - 1, pair.Item2 - 1] = true;
-            }
-        }
-
-        /// <summary>
-        /// Инициализирует отношение. 
-        /// </summary>
-        /// <param name="collection">Список для инициализации.</param>
-        public Relations(params (int, int)[] collection)
-        {
-            int maxElement = 0;
-            foreach (var pair in collection)
-            {
-                maxElement = Math.Max(maxElement, Math.Max(pair.Item1, pair.Item2));
-            }
-
-            _relations = new bool[maxElement, maxElement];
-            foreach (var pair in collection)
-            {
-                this[pair.Item1 - 1, pair.Item2 - 1] = true;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="other"></param>
-        public Relations(in Relations other)
-        {
-            this._power = other._power;
-            this._relations = other._relations;
-        }
 
         /// <summary>
         /// Всего ячеек в матрице.
@@ -175,52 +29,123 @@ namespace DiscreteMath
         /// <summary>
         /// Мощность матрицы.
         /// </summary>
-        /// <value>Возвращает кол-во лежащих элементов в матрице.</value>
+        /// <value>Возвращает кол-во элементов в матрице.</value>
         public int Power => _power;
 
-        public bool[,] Data => _relations;
-
-        /// <summary>
-        /// Удаления отношения (a,b) из матрицы
-        /// </summary>
-        /// <param name="p">Пара (a,b)</param>
-        public void DeleteElementByValues(in Tuple<int, int> p)
+        // Конструктор по умолчанию.
+        public Relations()
         {
-            try
-            {
-                if ((p.Item1 > Length || p.Item2 > Length) || p.Item2 * p.Item1 == 0)
-                {
-                    throw new ArgumentOutOfRangeException("Bad Elements");
-                }
+            _power = 0;
+            _relations = new bool[0, 0];
+        }
 
-                _relations[p.Item1 - 1, p.Item2 - 1] = false;
-            }
-            catch (ArgumentOutOfRangeException ex)
+        // Размещает матрицу размерности size на size.
+        public Relations(int size)
+        {
+            _relations = new bool[size, size];
+        }
+
+        // Инициализация отношения.
+        public Relations(IEnumerable<(int, int)> collection)
+        {
+            int maxElement = 0;
+            foreach (var item in collection)
             {
-                System.Console.WriteLine(ex);
+                maxElement = Math.Max(maxElement, Math.Max(item.Item1, item.Item2));
+            }
+
+            _relations = new bool[maxElement, maxElement];
+            foreach (var item in collection)
+            {
+                this[item.Item1 - 1, item.Item2 - 1] = true;
             }
         }
 
-        /// <summary>
-        /// Удаления отношения (a,b) из матрицы
-        /// </summary>
-        /// <param name="p">Пара (a,b)</param>
-        public void DeleteElementByValues(in (int, int) p)
+        // Инициализация отношения.
+        public Relations(IEnumerable<Tuple<int, int>> collection)
         {
-            try
+            int maxElement = 0;
+            foreach (var item in collection)
             {
-                if ((p.Item1 > Length || p.Item2 > Length) || p.Item2 * p.Item1 == 0)
-                {
-                    throw new ArgumentOutOfRangeException("Bad Elements");
-                }
-
-                _relations[p.Item1 - 1, p.Item2 - 1] = false;
+                maxElement = Math.Max(maxElement, Math.Max(item.Item1, item.Item2));
             }
-            catch (ArgumentOutOfRangeException ex)
+
+            _relations = new bool[maxElement, maxElement];
+            foreach (var item in collection)
             {
-                System.Console.WriteLine(ex);
+                this[item.Item1 - 1, item.Item2 - 1] = true;
             }
         }
+
+        // Инициализация отношения.
+        public Relations(bool[,] array)
+        {
+            _relations = array;
+
+            foreach (var element in _relations)
+            {
+                if (element)
+                {
+                    _power++;
+                }
+            }
+        }
+
+        // Инициализация отношения.
+        public Relations(in IEnumerable<Tuple<int, int>> collection, int maxElement) : this(maxElement)
+        {
+            foreach (var pair in collection)
+            {
+                this[pair.Item1 - 1, pair.Item2 - 1] = true;
+            }
+        }
+
+        // Инициализация отношения.
+        public Relations(in IEnumerable<(int, int)> collection, int maxElement) : this(maxElement)
+        {
+            foreach (var pair in collection)
+            {
+                this[pair.Item1 - 1, pair.Item2 - 1] = true;
+            }
+        }
+
+        // Инициализация отношения.
+        public Relations(int maxElement, params (int, int)[] collection) : this(maxElement)
+        {
+            foreach (var pair in collection)
+            {
+                this[pair.Item1 - 1, pair.Item2 - 1] = true;
+            }
+        }
+
+        // Инициализация отношения.
+        public Relations(params (int, int)[] collection)
+        {
+            int maxElement = 0;
+            foreach (var pair in collection)
+            {
+                maxElement = Math.Max(maxElement, Math.Max(pair.Item1, pair.Item2));
+            }
+
+            _relations = new bool[maxElement, maxElement];
+            foreach (var pair in collection)
+            {
+                this[pair.Item1 - 1, pair.Item2 - 1] = true;
+            }
+        }
+
+        // Инициализация отношения.
+        public Relations(in Relations other)
+        {
+            this._power = other._power;
+            this._relations = other._relations;
+        }
+
+        /// <summary>
+        /// Является ли пустым множество отношений.
+        /// </summary>
+        /// <returns>Возвращает true, если множество отношений пустое, иначе false.</returns>
+        private bool Empty() => _power == 0;
 
         /// <summary>
         /// Вывод отношений.
@@ -249,14 +174,14 @@ namespace DiscreteMath
         /// <returns>Возвращает отношения.</returns>
         public static Relations Input(int totalPairs)
         {
-            var list = new List<Tuple<int, int>>();
+            var list = new List<(int, int)>();
             string[] tuple = Console.ReadLine().Split(' ');
             int maxElement = 0;
 
             // Пары через enter.
             for (int i = 0; i < totalPairs; i++)
             {
-                list.Add(Tuple.Create<int, int>(Convert.ToInt32(tuple[0]), Convert.ToInt32(tuple[1])));
+                list.Add((Convert.ToInt32(tuple[0]), Convert.ToInt32(tuple[1])));
                 maxElement = Math.Max(maxElement, Math.Max(list[i - 1].Item1, list[i - 1].Item2));
 
                 tuple = Console.ReadLine().Split(' ');
@@ -264,13 +189,7 @@ namespace DiscreteMath
 
             return new Relations(list, maxElement);
         }
-    }
 
-    /// <summary>
-    /// Содержит операции и перегрузки над отношениями.
-    /// </summary>
-    public partial class Relations
-    {
         /// <summary>
         /// Перегрузка [,]
         /// </summary>
@@ -281,7 +200,7 @@ namespace DiscreteMath
             {
                 if (indexColumn >= Length || indexRow >= Length)
                 {
-                    throw new ArgumentOutOfRangeException("Bad indexs");
+                    throw new ArgumentOutOfRangeException("Bad index");
                 }
 
                 return _relations[indexRow, indexColumn];
@@ -291,7 +210,7 @@ namespace DiscreteMath
             {
                 if (indexColumn >= Length || indexRow >= Length)
                 {
-                    throw new ArgumentOutOfRangeException("Bad indexs");
+                    throw new ArgumentOutOfRangeException("Bad index");
                 }
 
                 if (_relations[indexRow, indexColumn] && !value)
@@ -306,9 +225,13 @@ namespace DiscreteMath
                 }
             }
         }
+    }
 
+    // Содержит операции над отношениями.
+    public partial class Relations
+    {
         /// <summary>
-        /// Является ли матрица отношений r1 подможеством матрицы отношений r2.
+        /// Является ли матрица отношений r1 подмножеством матрицы отношений r2.
         /// </summary>
         /// <param name="r1">Отношения первое.</param>
         /// <param name="r2">Отношение второе.</param>
@@ -335,7 +258,7 @@ namespace DiscreteMath
         }
 
         /// <summary>
-        /// Является ли матрица отношений r2 подможеством матрицы отношений r1.
+        /// Является ли матрица отношений r2 подмножеством матрицы отношений r1.
         /// </summary>
         /// <param name="r1">Отношения первое.</param>
         /// <param name="r2">Отношение второе.</param>
@@ -354,11 +277,11 @@ namespace DiscreteMath
         }
 
         /// <summary>
-        /// Неравенство отношений.
+        /// Не равенство отношений.
         /// </summary>
         /// <param name="r1">Отношение первое.</param>
         /// <param name="r2">Отношение второе.</param>
-        /// <returns>Возвращает true если r1 неравняется r2, иначе false.</returns>
+        /// <returns>Возвращает true если r1 не равняется r2, иначе false.</returns>
         public static bool operator !=(in Relations r1, in Relations r2) => !(r1 == r2);
 
         /// <summary>
@@ -392,7 +315,7 @@ namespace DiscreteMath
                 for (int column = 0; column < result.Length; column++)
                 {
                     if (((row <= r1.Length - 1) && (column <= r1.Length - 1)) &&
-                    (((row <= r2.Length - 1) && (column <= r2.Length - 1))))
+                        (((row <= r2.Length - 1) && (column <= r2.Length - 1))))
                     {
                         result[row, column] = r1[row, column] || r2[row, column];
                     }
@@ -633,10 +556,7 @@ namespace DiscreteMath
 
         static void Main(string[] args)
         {
-            Relations a = new Relations((1, 3), (2, 3), (1, 4));
-            Relations b = new Relations((3, 1), (4, 1));
 
-            Relations.Output(Relations.Composition(a, b));
         }
     }
 
