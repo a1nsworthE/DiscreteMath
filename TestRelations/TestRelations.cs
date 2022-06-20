@@ -1276,7 +1276,10 @@ public class TestRelations
     {
         // Arrange
         Relations a = new Relations((1,2));
-        int expected = 1;
+        var expected = new Relations(
+            (1,1),
+            (2,2)
+        );
 
         // Act
         var result = Relations.Exponentiation(a,0);
@@ -1311,5 +1314,53 @@ public class TestRelations
 
         // Assert
         Assert.AreEqual(result, expected);
+    }
+
+    [TestMethod]
+    public void IsReflexively_Empty_ShouldReturnFalse()
+    {
+        // Arrange
+        Relations a = new Relations();
+        var expected = false;
+
+        // Act
+        var result = Relations.IsReflexively(a);
+
+        // Assert
+        Assert.AreEqual(expected, result);
+    }
+
+    [TestMethod]
+    public void IsReflexively_EmptyWithSize_ShouldReturnFalse()
+    {
+        // Arrange
+        Relations a = new Relations(10);
+        var expected = false;
+
+        // Act
+        var result = Relations.IsReflexively(a);
+
+        // Assert
+        Assert.AreEqual(expected, result);
+    }
+
+    [TestMethod]
+    public void IsReflexively_Reflexively_ShouldReturnTrue()
+    {
+        // Arrange
+        Relations a = new Relations(
+            (1,1),
+            (2,2),
+            (1,2),
+            (2,1),
+            (3,3)
+        );
+        var expected = true;
+
+        // Act
+        var result = Relations.IsReflexively(a);
+
+        // Assert
+        Assert.AreEqual(expected, result);
     }
 }

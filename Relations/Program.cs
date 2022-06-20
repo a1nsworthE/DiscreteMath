@@ -528,6 +528,7 @@ namespace DiscreteMath
             }
             else
             {
+                result = r;
                 for (int i = 1; i <= degree; i++)
                 {
                     result = Relations.Composition(r, result);
