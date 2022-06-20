@@ -515,22 +515,133 @@ namespace DiscreteMath
         /// <param name="r">Отношение.</param>
         /// <param name="degree">Степень в которую требуется возвести.</param>
         /// <returns>Возвращает отношение r возведенное в степень degree.</returns>
-        public static dynamic Exponentiation(in Relations r, int degree)
+        public static Relations Exponentiation(in Relations r, int degree)
         {
+            var result = new Relations(r.Length);
+
             if (degree == 0)
             {
-                return 1;
+                for (int row = 0; row < r.Length; row++)
+                {
+                    result[row, row] = true;
+                }
             }
             else
             {
-                var result = r;
                 for (int i = 1; i <= degree; i++)
                 {
                     result = Relations.Composition(r, result);
                 }
-
-                return result;
             }
+
+            return result;
+        }
+
+        public static bool IsReflexively(in Relations r)
+        {
+            if (r.Empty() || r.CounterCells == 0)
+            {
+                return false;
+            }
+
+            for (int row = 0; row < r.Length; row++)
+            {
+                if (r[row, row] != true)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public static bool IsNotReflexively(in Relations r)
+        {
+            return (!r.Empty() && r.CounterCells != 0) && !IsReflexively(r);
+        }
+
+        public static bool IsSymmetrical(in Relations r)
+        {
+            if (r.Empty() || r.CounterCells == 0)
+            {
+                return false;
+            }
+
+            for (int row = 0; row < r.Length; row++)
+            {
+                for (int column = 0; column < r.Length; column++)
+                {
+                    if (r[row, column] != r[column, row])
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        public static bool IsNotSymmetrical(in Relations r)
+        {
+            return (!r.Empty() && r.CounterCells != 0) && !IsSymmetrical(r);
+        }
+
+        public static bool IsTransitively(in Relations r)
+        {
+            if (r.Empty() || r.CounterCells == 0)
+            {
+                return false;
+            }
+
+            for (int row = 0; row < r.Length; row++)
+            {
+                for (int column = 0; column < r.Length; column++)
+                {
+                    for (int z = 0; z < r.Length; z++)
+                    {
+                        if (r[row, z] == r[z, column])
+                        {
+                            if (r[row, column] != r[row, z])
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        public static bool IsNotTransitively(in Relations r)
+        {
+            return (!r.Empty() && r.CounterCells != 0) && !IsTransitively(r);
+        }
+
+        public static bool IsFully(in Relations r)
+        {
+            if (r.Empty() || r.CounterCells == 0)
+            {
+                return false;
+            }
+
+            for (int row = 0; row < r.Length; row++)
+            {
+                for (int column = 0; column < r.Length; column++)
+                {
+                    if (r[row, column] || r[column, row])
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public static bool IsNotFully(in Relations r)
+        {
+            return (!r.Empty() && r.CounterCells != 0) && !IsFully(r);
         }
 
         public override bool Equals(object? obj)
