@@ -701,7 +701,6 @@ namespace DiscreteMath
         }
     }
 
-
     class Program
     {
 
