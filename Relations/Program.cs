@@ -462,11 +462,11 @@ namespace DiscreteMath
             return new Relations(list, maxElement); ;
         }
 
-
         /// <summary>
-        /// 
+        /// Композиция отношений.
         /// </summary>
-        /// <param name="r"></param>
+        /// <param name="r1">Первое отношение.</param>
+        /// <param name="r2">Второе отношение.</param>
         /// <returns></returns>
         public static Relations Composition(in Relations r1, in Relations r2)
         {
@@ -536,7 +536,12 @@ namespace DiscreteMath
 
             return result;
         }
-
+        
+        /// <summary>
+        /// Проверка на рефлексивность отношения.
+        /// </summary>
+        /// <param name="r">Отношение.</param>
+        /// <returns>Возвращает true, если отношение рефлексивно, иначе false.</returns>
         public static bool IsReflexively(in Relations r)
         {
             if (r.Empty() || r.CounterCells == 0)
@@ -555,11 +560,21 @@ namespace DiscreteMath
             return true;
         }
 
+        /// <summary>
+        /// Проверка на не рефлексивность отношения.
+        /// </summary>
+        /// <param name="r">Отношение.</param>
+        /// <returns>Возвращает true, если отношение не рефлексивно, иначе false.</returns>
         public static bool IsNotReflexively(in Relations r)
         {
             return (!r.Empty() && r.CounterCells != 0) && !IsReflexively(r);
         }
 
+        /// <summary>
+        /// Проверка на симметричность отношения.
+        /// </summary>
+        /// <param name="r">Отношение.</param>
+        /// <returns>Возвращает true, если отношение симметрично, иначе false.</returns>
         public static bool IsSymmetrical(in Relations r)
         {
             if (r.Empty() || r.CounterCells == 0)
@@ -581,11 +596,21 @@ namespace DiscreteMath
             return true;
         }
 
+        /// <summary>
+        /// Проверка на не симметричность отношения.
+        /// </summary>
+        /// <param name="r">Отношение.</param>
+        /// <returns>Возвращает true, если отношение не симметрично, иначе false.</returns>
         public static bool IsNotSymmetrical(in Relations r)
         {
             return (!r.Empty() && r.CounterCells != 0) && !IsSymmetrical(r);
         }
 
+        /// <summary>
+        /// Проверка на транзитивность отношения.
+        /// </summary>
+        /// <param name="r">Отношение.</param>
+        /// <returns>Возвращает true, если отношение транзитивно, иначе false.</returns>
         public static bool IsTransitively(in Relations r)
         {
             if (r.Empty() || r.CounterCells == 0)
@@ -613,11 +638,21 @@ namespace DiscreteMath
             return true;
         }
 
+        /// <summary>
+        /// Проверка на не транзитивность отношения.
+        /// </summary>
+        /// <param name="r">Отношение.</param>
+        /// <returns>Возвращает true, если отношение не транзитивно, иначе false.</returns>
         public static bool IsNotTransitively(in Relations r)
         {
             return (!r.Empty() && r.CounterCells != 0) && !IsTransitively(r);
         }
 
+        /// <summary>
+        /// Проверка на полность отношения.
+        /// </summary>
+        /// <param name="r">Отношение.</param>
+        /// <returns>Возвращает true, если отношение полно, иначе false.</returns>
         public static bool IsFully(in Relations r)
         {
             if (r.Empty() || r.CounterCells == 0)
@@ -639,6 +674,11 @@ namespace DiscreteMath
             return false;
         }
 
+        /// <summary>
+        /// Проверка на не полноту отношения.
+        /// </summary>
+        /// <param name="r">Отношение.</param>
+        /// <returns>Возвращает true, если отношение не полно, иначе false.</returns>
         public static bool IsNotFully(in Relations r)
         {
             return (!r.Empty() && r.CounterCells != 0) && !IsFully(r);
