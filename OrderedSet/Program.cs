@@ -3,7 +3,8 @@ using DiscreteMath;
 
 static class OrderedSet
 {
-    public static bool DefaultBinaryPredicate(Point point1, Point point2) => point1.X <= point2.X;
+    public static bool DefaultBinaryPredicate(Point point1, Point point2) =>
+        point1.X <= point2.X && point1.Y <= point2.Y;
 
     public static IList<Point> CreateSetPoints1(int left = -1, int right = 1)
     {
@@ -12,9 +13,9 @@ static class OrderedSet
 
         var points = new List<Point>();
 
-        for (var y = right; y >= left; y--)
+        for (var x = left; x <= right; x++)
         {
-            for (var x = left; x <= right; x++)
+            for (var y = left; y <= right; y++)
             {
                 points.Add(new Point(x, y));
             }
@@ -28,16 +29,15 @@ static class OrderedSet
         if (left > right)
             throw new ArgumentException("right must equal or more then left");
 
-        var points = new List<Point>();
+        var points = new List<Point> { new Point(0, right) };
 
-        points.Add(new Point(0, left));
         for (var x = left + 1; x <= right - 1; x++)
-            points.Add(new Point(x, 1));
+            points.Add(new Point(x, right - 1));
         for (var x = left; x <= right; x++)
             points.Add(new Point(x, 0));
         for (var x = left + 1; x <= right - 1; x++)
-            points.Add(new Point(x, -1));
-        points.Add(new Point(0, right));
+            points.Add(new Point(x, left + 1));
+        points.Add(new Point(0, left));
 
         return points;
     }
@@ -54,7 +54,8 @@ static class OrderedSet
         {
             for (var column = 0; column < r.Length; column++)
             {
-                r[row, column] = binaryPredicate(points[row], points[column]);
+                if (binaryPredicate(points[row], points[column]))
+                    r[row, column] = true;
             }
         }
 
@@ -117,12 +118,6 @@ static class OrderedSet
             source[i] -= Convert.ToInt32(r[(int)indexRow, i]);
     }
 
-    private static void SubtractRowOnValue(ref IList<long> source, int value)
-    {
-        for (var i = 0; i < source.Count; i++)
-            source[i] -= value;
-    }
-
     public static List<List<Point>> TopologicalSort(ref Relations r, IList<Point> points)
     {
         var sumColumns = RelationArraySumColumns(r) as IList<long>;
@@ -167,7 +162,7 @@ static class OrderedSet
         {
             for (int column = 0; column < r1.Length; column++)
             {
-                Console.Write($"{Convert.ToInt16(r1[row, column])}");
+                Console.Write($" {Convert.ToInt16(r1[row, column])} ");
             }
 
             Console.WriteLine();
@@ -180,20 +175,23 @@ static class OrderedSet
         {
             for (int column = 0; column < r2.Length; column++)
             {
-                Console.Write($"{Convert.ToInt16(r2[row, column])}");
+                Console.Write($" {Convert.ToInt16(r2[row, column])} ");
             }
 
             Console.WriteLine();
         }
+        
+        Console.WriteLine();
+        Console.WriteLine();
 
         MakeDominanceRelation(ref r1);
         MakeDominanceRelation(ref r2);
 
-        for (int row = 0; row < r1.Length; row++)
+        for (var row = 0; row < r1.Length; row++)
         {
-            for (int column = 0; column < r1.Length; column++)
+            for (var column = 0; column < r1.Length; column++)
             {
-                Console.Write($"{Convert.ToInt16(r1[row, column])}");
+                Console.Write($" {Convert.ToInt16(r1[row, column])} ");
             }
 
             Console.WriteLine();
@@ -206,7 +204,7 @@ static class OrderedSet
         {
             for (int column = 0; column < r2.Length; column++)
             {
-                Console.Write($"{Convert.ToInt16(r2[row, column])}");
+                Console.Write($" {Convert.ToInt16(r2[row, column])} ");
             }
 
             Console.WriteLine();
@@ -214,7 +212,8 @@ static class OrderedSet
 
         var topologicalSort1 = TopologicalSort(ref r1, points1);
         var topologicalSort2 = TopologicalSort(ref r2, points2);
-
+        
+        Console.WriteLine();
         Console.WriteLine("M1");
         int i = 0;
         foreach (var list in topologicalSort1)
@@ -222,7 +221,7 @@ static class OrderedSet
             Console.Write($"{i}:  ");
             foreach (var point in list)
             {
-                Console.Write($"{point}");
+                Console.Write($" {point} ");
             }
 
             i++;
@@ -238,11 +237,40 @@ static class OrderedSet
             Console.Write($"{i}:  ");
             foreach (var point in list)
             {
-                Console.Write($"{point}");
+                Console.Write($" {point} ");
             }
 
             i++;
             Console.WriteLine();
         }
+        
+        Console.WriteLine();
+        Console.WriteLine();
+        
+        for (int row = 0; row < r1.Length; row++)
+        {
+            for (int column = 0; column < r1.Length; column++)
+            {
+                Console.Write($" {Convert.ToInt16(r1[row, column])} ");
+            }
+
+            Console.WriteLine();
+        }
+
+        Console.WriteLine();
+        Console.WriteLine();
+
+        for (int row = 0; row < r2.Length; row++)
+        {
+            for (int column = 0; column < r2.Length; column++)
+            {
+                Console.Write($" {Convert.ToInt16(r2[row, column])} ");
+            }
+
+            Console.WriteLine();
+        }
+        
+        Console.WriteLine();
+        Console.WriteLine();
     }
 }

@@ -40,7 +40,7 @@ class ClosureRelations
         {
             for (var x = 0; x < a.Length; x++)
             {
-                for (var y = 0; y < a.Length; y++)
+                for (var y = 0; y < a.Length && result[x,z]; y++)
                     result[x, y] = result[x, y] || result[x, z] && result[z, y];
             }
         }
@@ -145,18 +145,11 @@ class ClosureRelations
             yield return (max, min);
             (max, min) = (0, ulong.MaxValue);
         }
-
     }
 
     public static void Main(string[] args)
     {
-        var a = Benchmark(new Algorithm(DegreesMerger1),5);
-        Console.WriteLine("DegreesMerger1");
-        foreach (var x in a)
-            Console.WriteLine(x);
-        Console.WriteLine("WorshallAlgorithm");
-        var c = Benchmark(new Algorithm(WorshallAlgorithm), 50);
-        foreach (var x in c)
-            Console.WriteLine(x);
+        var r = new Relations((1, 1), (1, 3), (1, 5), (2, 1), (2, 3), (2, 5), (3, 1), (3, 4), (3, 2), (4, 1), (4, 5));
+        Relations.Output(WorshallAlgorithm(r));
     }
 }

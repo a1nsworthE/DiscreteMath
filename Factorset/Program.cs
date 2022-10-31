@@ -52,8 +52,7 @@ class Factorset
 
     public static void Main(string[] args)
     {
-        var r = new Relations((1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8,8),(9, 9), (10, 10), (1, 6), (6, 1),
-            (2, 7), (7, 2), (3, 8), (8, 3), (4, 9), (9, 4), (10, 5), (5, 10));
+        var r = new Relations((1,1),(1,2),(1,4),(2,1),(2,3),(2,4),(3,1),(3,4));
 
         var result = MakePartition(r);
         

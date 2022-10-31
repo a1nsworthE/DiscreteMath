@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factorset", "Factorset\Fact
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderedSet", "OrderedSet\OrderedSet.csproj", "{FFFB5438-397E-4161-A0F0-99155D2BDB7D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graph", "Graph\Graph.csproj", "{4526E1A1-56B3-4347-BEC5-F0BA53C9ADA8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{FFFB5438-397E-4161-A0F0-99155D2BDB7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFFB5438-397E-4161-A0F0-99155D2BDB7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFFB5438-397E-4161-A0F0-99155D2BDB7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4526E1A1-56B3-4347-BEC5-F0BA53C9ADA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4526E1A1-56B3-4347-BEC5-F0BA53C9ADA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4526E1A1-56B3-4347-BEC5-F0BA53C9ADA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4526E1A1-56B3-4347-BEC5-F0BA53C9ADA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

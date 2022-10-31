@@ -57,7 +57,7 @@ namespace DiscreteMath
             foreach (var item in collection)
                 this[item.Item1 - 1, item.Item2 - 1] = true;
         }
-        
+
         // Инициализация отношения.
         public Relations(IEnumerable<Point> collection)
         {
@@ -260,7 +260,7 @@ namespace DiscreteMath
 
             return true;
         }
-        
+
         /// <summary>
         /// Является ли матрица отношений r1 подмножеством матрицы отношений r2.
         /// </summary>
@@ -287,7 +287,7 @@ namespace DiscreteMath
 
             return true;
         }
-        
+
         /// <summary>
         /// Является ли матрица отношений r2 подмножеством матрицы отношений r1.
         /// </summary>
@@ -823,51 +823,10 @@ namespace DiscreteMath
 
     class Program
     {
-        private static readonly Relations A = new((4, 1), (4, 2), (4, 3), (4, 4), (4, 8), (4, 9));
-        private static readonly Relations B = new((2, 1), (2, 3), (2, 4), (2, 7), (2, 9), (4, 1));
-        private static readonly Relations C = new((3, 3), (3, 6), (3, 9), (4, 2), (4, 5), (4, 8));
-
-        private static void PrintReflexively()
-        {
-            Console.WriteLine(
-                $"A: Рефлексивно = {Relations.IsReflexively(A)}, Антирефлексивно = {Relations.IsAntiReflexively(A)}");
-            Console.WriteLine(
-                $"B: Рефлексивно = {Relations.IsReflexively(B)}, Антирефлексивно = {Relations.IsAntiReflexively(B)}");
-            Console.WriteLine(
-                $"C: Рефлексивно = {Relations.IsReflexively(C)}, Антирефлексивно = {Relations.IsAntiReflexively(C)}");
-        }
-
-        private static void PrintSymmetrical()
-        {
-            Console.WriteLine(
-                $"A: Симметрично = {Relations.IsSymmetrical(A)}, Антисимметрично = {Relations.IsAntiSymmetrical(A)}");
-            Console.WriteLine(
-                $"B: Симметрично = {Relations.IsSymmetrical(B)}, Антисимметрично = {Relations.IsAntiSymmetrical(B)}");
-            Console.WriteLine(
-                $"C: Симметрично = {Relations.IsSymmetrical(C)}, Антисимметрично = {Relations.IsAntiSymmetrical(C)}");
-        }
-
-        private static void PrintTransitively()
-        {
-            Console.WriteLine(
-                $"A: Транзитивно = {Relations.IsTransitively(A)}, Антитранзитивно = {Relations.IsAntiTransitively(A)}");
-            Console.WriteLine(
-                $"B: Транзитивно = {Relations.IsTransitively(B)}, Антитранзитивно = {Relations.IsAntiTransitively(B)}");
-            Console.WriteLine(
-                $"C: Транзитивно = {Relations.IsTransitively(C)}, Антитранзитивно = {Relations.IsAntiTransitively(C)}");
-        }
-
-        private static void PrintFully()
-        {
-            Console.WriteLine($"A: Полно = {Relations.IsFully(A)}");
-            Console.WriteLine($"B: Полно = {Relations.IsFully(B)}");
-            Console.WriteLine($"C: Полно = {Relations.IsFully(C)}");
-        }
-
         static void Main(string[] args)
         {
-            //Relations.Output(Relations.Composition(B ^ Relations.Composition(C, C), A) ^ !A);
-            //Relations.Output(Relations.Composition(A,B));
+            var r = new Relations((1, 1), (1, 2), (1, 4), (2, 1), (2, 3), (2, 4), (3, 1), (3, 2));
+            Console.Write(Relations.Composition(r,r));
         }
     }
 }
